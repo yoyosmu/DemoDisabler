@@ -22,11 +22,11 @@ public class DemoDisabler {
     public DemoDisabler() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
+        
         modBus.addListener(this::onAddLayers);
     }
 
     public void onAddLayers(AddGuiOverlayLayersEvent event) {
-        // Modern API to hide the "minecraft:demo" overlay [4, 5]
         event.addConditionTo(ResourceLocation.withDefaultNamespace("demo"), () -> !disabled);
     }
 
@@ -50,7 +50,7 @@ public class DemoDisabler {
                 service.chatAllowed = true;
             }
 
-            LOGGER.info("Demo mode disabled.");
+            LOGGER.info("Demo mode disabled via ATs.");
             disabled = true;
             mc.setScreen(new TitleScreen());
         } catch (Exception e) {
