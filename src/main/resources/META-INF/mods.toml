@@ -8,7 +8,7 @@ modId="demodisablermod"
 version="${file.jarVersion}"
 displayName="Demo Disabler"
 displayTest="NONE" 
-description='''Disables demo mode for multiplayer and chat!'''
+description='''Disables demo mode, thats really cool'''
 
 [mods.features]
 java_version="[17,)" 
