@@ -2,16 +2,14 @@ package com.github.dedinc.demodisabler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.AddGuiOverlayLayersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.lang.reflect.Field;
 
 @Mod("demodisablermod")
 public class DemoDisabler {
@@ -20,14 +18,7 @@ public class DemoDisabler {
     private static boolean disabled = false;
 
     public DemoDisabler() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
-        
-        modBus.addListener(this::onAddLayers);
-    }
-
-    public void onAddLayers(AddGuiOverlayLayersEvent event) {
-        event.addConditionTo(ResourceLocation.withDefaultNamespace("demo"), () -> !disabled);
     }
 
     @SubscribeEvent
@@ -40,21 +31,33 @@ public class DemoDisabler {
 
     private void disableDemoMode() {
         try {
-            mc.demo = false;
-            mc.allowsMultiplayer = true;
-            mc.allowsChat = true;
+            setPrivateField(Minecraft.class, mc, "demo", false);
+            setPrivateField(Minecraft.class, mc, "allowsMultiplayer", true);
+            setPrivateField(Minecraft.class, mc, "allowsChat", true);
 
-            var service = mc.socialInteractionsService;
+            Object service = getPrivateField(Minecraft.class, mc, "socialInteractions");
             if (service != null) {
-                service.serversAllowed = true;
-                service.chatAllowed = true;
+                setPrivateField(service.getClass(), service, "serversAllowed", true);
+                setPrivateField(service.getClass(), service, "chatAllowed", true);
             }
 
-            LOGGER.info("Demo mode disabled via ATs.");
+            LOGGER.info("Demo mode disabled using Reflection.");
             disabled = true;
             mc.setScreen(new TitleScreen());
         } catch (Exception e) {
-            LOGGER.error("Failed to disable demo mode: ", e);
+            LOGGER.error("Failed to disable demo mode via reflection: ", e);
         }
+    }
+
+    private void setPrivateField(Class<?> clazz, Object instance, String fieldName, Object value) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(instance, value);
+    }
+
+    private Object getPrivateField(Class<?> clazz, Object instance, String fieldName) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(instance);
     }
 }
