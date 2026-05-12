@@ -40,7 +40,6 @@ public class DemoDisabler {
 
     private void disableDemoMode() {
         try {
-            // Field names must use SRG names for Access Transformers [6]
             mc.demo = false;
             mc.allowsMultiplayer = true;
             mc.allowsChat = true;
