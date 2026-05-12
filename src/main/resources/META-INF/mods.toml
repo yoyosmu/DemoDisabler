@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[51,)" 
+loaderVersion="[47,)" 
 license="MIT"
 clientSideOnly=true
 
@@ -11,18 +11,18 @@ displayTest="NONE"
 description='''Disables demo mode for multiplayer and chat!'''
 
 [mods.features]
-java_version="[21,)" 
+java_version="[17,)" 
 
 [[dependencies.demodisablermod]]
 modId="forge"
 mandatory=true
-versionRange="[51,)"
+versionRange="[47,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.demodisablermod]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.21, 1.22)"
+versionRange="[1.20.1, 1.21)"
 ordering="NONE"
 side="BOTH"
