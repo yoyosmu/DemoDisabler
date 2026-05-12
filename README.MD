@@ -4,15 +4,17 @@
 
 DemoDisablerMod is a Minecraft Forge mod designed to disable the limitations imposed by the Minecraft demo mode. Once activated, it allows players to access multiplayer features, chat, and removes all demo restrictions directly from the main menu.
 
+This mod is **physical client-only**; it is designed to run on the game instance the user interacts with and should not be loaded on a dedicated server.
+
 ## Requirements
 
-- **Minecraft Forge 1.21**: The mod is now built and tested for this version. Compatibility with other versions or mappings may be limited and could require modifications.
-- **Java 21 or higher**: Modern versions of Forge officially require and support the **Java 21 Development Kit (JDK)** and a 64-bit JVM.
+- **Minecraft Forge 1.20.1**: The mod is specifically built and tested for Minecraft version 1.20.1 and Forge version **47.4.10**.
+- **Java 17**: Unlike newer versions of Forge that require Java 21, Minecraft 1.20.1 is officially supported using the **Java 17 Development Kit (JDK)** and a 64-bit JVM.
 
 ## Installation
 
-1. Ensure you have Minecraft installed.
-2. Install Minecraft Forge for your corresponding Minecraft version if you haven't done so already. Forge installer can be downloaded from [the official Forge website](http://files.minecraftforge.net/).
+1. Ensure you have Minecraft 1.20.1 installed.
+2. Install **Minecraft Forge 47.4.10**. The Forge installer can be downloaded from [the official Forge website](http://files.minecraftforge.net/).
 3. Download the `demodisablermod-1.0.0.jar` file.
 4. Place the downloaded `.jar` file into the `mods` folder in your Minecraft directory:
    - **Windows**: `%appdata%\.minecraft\mods`
@@ -24,14 +26,16 @@ DemoDisablerMod is a Minecraft Forge mod designed to disable the limitations imp
 To build the mod from the source, follow these steps:
 
 1. Clone the repository to your local machine.
-2. Navigate to the cloned directory.
-3. Use the following Gradle command to build the project:
+2. Ensure your terminal is set to use **Java 17**.
+3. Navigate to the cloned directory and run the following Gradle command:
 
    ```bash
-   ./gradlew build
+   ./gradlew clean build
    ```
 
-The build output, `jar file`, will be located in the **`build/libs`** folder.
+The build output JAR will be located in the **`build/libs`** folder. 
+
+*Note: This project no longer uses Access Transformers; all field access is now handled via Java Reflection, so no `accesstransformer.cfg` is required for the build.*
 
 ## Usage
 
