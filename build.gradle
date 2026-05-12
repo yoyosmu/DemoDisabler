@@ -21,8 +21,6 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
     
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
     copyIdeResources = true
 
     runs {
@@ -58,5 +56,5 @@ dependencies {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.encoding = 'UTF-8' 
 }
