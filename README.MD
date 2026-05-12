@@ -1,4 +1,3 @@
-
 # DemoDisablerMod
 
 ## Overview
@@ -7,14 +6,14 @@ DemoDisablerMod is a Minecraft Forge mod designed to disable the limitations imp
 
 ## Requirements
 
-- **Minecraft Forge 1.16.5**: The mod is built and tested solely for this version using its specific mappings. Compatibility with other versions or mappings may be limited and could require modifications.
-- **Java 8 or higher**
+- **Minecraft Forge 1.21**: The mod is now built and tested for this version. Compatibility with other versions or mappings may be limited and could require modifications.
+- **Java 21 or higher**: Modern versions of Forge officially require and support the **Java 21 Development Kit (JDK)** and a 64-bit JVM.
 
 ## Installation
 
 1. Ensure you have Minecraft installed.
 2. Install Minecraft Forge for your corresponding Minecraft version if you haven't done so already. Forge installer can be downloaded from [the official Forge website](http://files.minecraftforge.net/).
-3. Download the `DemoDisablerMod.jar` file.
+3. Download the `demodisablermod-1.0.0.jar` file.
 4. Place the downloaded `.jar` file into the `mods` folder in your Minecraft directory:
    - **Windows**: `%appdata%\.minecraft\mods`
    - **Mac/Linux**: `~/.minecraft/mods`
@@ -29,10 +28,10 @@ To build the mod from the source, follow these steps:
 3. Use the following Gradle command to build the project:
 
    ```bash
-   gradle build
+   ./gradlew build
    ```
 
-The build output, `jar file`, will be located in the `build/libs` folder.
+The build output, `jar file`, will be located in the **`build/libs`** folder.
 
 ## Usage
 
@@ -40,4 +39,4 @@ Once installed, the mod automatically integrates with Minecraft. Start your game
 
 ## License
 
-This project is available under the MIT License. See the LICENSE file for more details.
+This project is available under the **MIT License**. See the LICENSE file for more details.
