@@ -1,6 +1,5 @@
 package com.github.dedinc.demodisabler;
 
-import com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -25,8 +24,6 @@ public class DemoDisabler {
     @SubscribeEvent
     public void onInitGuiPost(ScreenEvent.Init.Post event) {
         if (disabled) return;
-
-        // In 1.20.1, MainMenuScreen is now TitleScreen
         if (event.getScreen() instanceof TitleScreen) {
             disableDemoMode();
         }
@@ -34,20 +31,20 @@ public class DemoDisabler {
 
     private void disableDemoMode() {
         try {
-            setPrivateField(Minecraft.class, mc, "f_91040_", false);
-            setPrivateField(Minecraft.class, mc, "f_91045_", true);
-            setPrivateField(Minecraft.class, mc, "f_91046_", true);
+            setPrivateField(Minecraft.class, mc, "f_91040_", false); 
+            setPrivateField(Minecraft.class, mc, "f_91045_", true);  
+            setPrivateField(Minecraft.class, mc, "f_91046_", true);  
 
-            Field serviceField = Minecraft.class.getDeclaredField("f_91041_");
+            Field serviceField = Minecraft.class.getDeclaredField("f_91041_"); 
             serviceField.setAccessible(true);
-            YggdrasilSocialInteractionsService service = (YggdrasilSocialInteractionsService) serviceField.get(mc);
+            Object service = serviceField.get(mc);
 
             if (service != null) {
-                setPrivateField(YggdrasilSocialInteractionsService.class, service, "serversAllowed", true);
-                setPrivateField(YggdrasilSocialInteractionsService.class, service, "chatAllowed", true);
+                setPrivateField(service.getClass(), service, "serversAllowed", true);
+                setPrivateField(service.getClass(), service, "chatAllowed", true);
             }
 
-            LOGGER.info("Demo mode has been disabled via 1.20.1 Reflection.");
+            LOGGER.info("Demo mode disabled for 1.20.1.");
             disabled = true;
 
             mc.setScreen(new TitleScreen());
