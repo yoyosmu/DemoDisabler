@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Field;
+
 @Mod("demodisablermod")
 public class DemoDisabler {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -29,18 +31,21 @@ public class DemoDisabler {
 
     private void disableDemoMode() {
         try {
-            mc.demo = false;
-            mc.allowsMultiplayer = true;
-            mc.allowsChat = true;
+            Field demoField = Minecraft.class.getDeclaredField("demo");
+            demoField.setAccessible(true);
+            demoField.set(mc, false);
 
-            if (mc.socialInteractionsService != null) { 
-                mc.socialInteractionsService.serversAllowed = true;
-                mc.socialInteractionsService.chatAllowed = true;
-            }
+            Field allowsMultiplayerField = Minecraft.class.getDeclaredField("allowsMultiplayer");
+            allowsMultiplayerField.setAccessible(true);
+            allowsMultiplayerField.set(mc, true);
 
-            LOGGER.info("Demo mode successfully bypassed via Access Transformers.");
+            Field allowsChatField = Minecraft.class.getDeclaredField("allowsChat");
+            allowsChatField.setAccessible(true);
+            allowsChatField.set(mc, true);
+
+            LOGGER.info("Demo mode successfully disabled.");
             disabled = true;
-            
+
             mc.setScreen(new TitleScreen());
         } catch (Exception e) {
             LOGGER.error("Failed to disable demo mode: ", e);
