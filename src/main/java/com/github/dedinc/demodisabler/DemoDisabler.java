@@ -14,7 +14,6 @@ import java.lang.reflect.Field;
 @Mod("demodisablermod")
 public class DemoDisabler {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Minecraft mc = Minecraft.getInstance();
     private static boolean disabled = false;
 
     public DemoDisabler() {
@@ -31,21 +30,22 @@ public class DemoDisabler {
 
     private void disableDemoMode() {
         try {
-            Field demoField = Minecraft.class.getDeclaredField("demo");
+            Minecraft mc = Minecraft.getInstance();
+
+            Field demoField = Minecraft.class.getDeclaredField("f_90980_");
             demoField.setAccessible(true);
             demoField.set(mc, false);
 
-            Field allowsMultiplayerField = Minecraft.class.getDeclaredField("allowsMultiplayer");
+            Field allowsMultiplayerField = Minecraft.class.getDeclaredField("f_90978_");
             allowsMultiplayerField.setAccessible(true);
             allowsMultiplayerField.set(mc, true);
 
-            Field allowsChatField = Minecraft.class.getDeclaredField("allowsChat");
+            Field allowsChatField = Minecraft.class.getDeclaredField("f_90979_");
             allowsChatField.setAccessible(true);
             allowsChatField.set(mc, true);
 
-            LOGGER.info("Demo mode successfully disabled.");
+            LOGGER.info("Demo mode disabled successfully.");
             disabled = true;
-
             mc.setScreen(new TitleScreen());
         } catch (Exception e) {
             LOGGER.error("Failed to disable demo mode: ", e);
