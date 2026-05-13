@@ -9,8 +9,6 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Field;
-
 @Mod("demodisablermod")
 public class DemoDisabler {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -31,31 +29,21 @@ public class DemoDisabler {
 
     private void disableDemoMode() {
         try {
-            setPrivateField(Minecraft.class, mc, "f_91040_", false); 
-            setPrivateField(Minecraft.class, mc, "f_91045_", true);  
-            setPrivateField(Minecraft.class, mc, "f_91046_", true);  
+            mc.demo = false;
+            mc.allowsMultiplayer = true;
+            mc.allowsChat = true;
 
-            Field serviceField = Minecraft.class.getDeclaredField("f_91041_"); 
-            serviceField.setAccessible(true);
-            Object service = serviceField.get(mc);
-
-            if (service != null) {
-                setPrivateField(service.getClass(), service, "serversAllowed", true);
-                setPrivateField(service.getClass(), service, "chatAllowed", true);
+            if (mc.socialInteractionsService != null) { 
+                mc.socialInteractionsService.serversAllowed = true;
+                mc.socialInteractionsService.chatAllowed = true;
             }
 
-            LOGGER.info("Demo mode disabled for 1.20.1.");
+            LOGGER.info("Demo mode successfully bypassed via Access Transformers.");
             disabled = true;
-
+            
             mc.setScreen(new TitleScreen());
         } catch (Exception e) {
             LOGGER.error("Failed to disable demo mode: ", e);
         }
-    }
-
-    private void setPrivateField(Class<?> clazz, Object instance, String fieldName, Object value) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(instance, value);
     }
 }
