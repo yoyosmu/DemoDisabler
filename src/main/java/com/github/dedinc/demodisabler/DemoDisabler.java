@@ -21,7 +21,7 @@ public class DemoDisabler {
     }
 
     @SubscribeEvent
-    public void onInitGuiPost(ScreenEvent.Init.Post event) {
+    public void onInitGuiPre(ScreenEvent.Init.Pre event) {
         if (disabled) return;
         if (event.getScreen() instanceof TitleScreen) {
             disableDemoMode();
