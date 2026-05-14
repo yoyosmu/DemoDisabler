@@ -46,7 +46,6 @@ public class DemoDisabler {
 
             LOGGER.info("Demo mode disabled successfully.");
             disabled = true;
-            mc.setScreen(new TitleScreen());
         } catch (Exception e) {
             LOGGER.error("Failed to disable demo mode: ", e);
         }
