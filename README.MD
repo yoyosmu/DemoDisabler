@@ -1,5 +1,5 @@
 # DemoDisablerMod
-
+this mod doesnt work yet
 ## Overview
 
 DemoDisablerMod is a Minecraft Forge mod designed to disable the limitations imposed by the Minecraft demo mode. Once activated, it allows players to access multiplayer features, chat, and removes all demo restrictions directly from the main menu.
